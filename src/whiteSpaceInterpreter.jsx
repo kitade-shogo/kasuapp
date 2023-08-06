@@ -3,7 +3,7 @@ import React, { useState } from "react";
 function WhitespaceInterpreter() {
   const [code, setCode] = useState("");
   const [result, setResult] = useState("");
-  const [hint, setHint] = useState("");
+  const [isDisp, setIsDisp] = useState(false);
   const [message, setMessage] = useState("");
 
   // to help with debugging
@@ -277,39 +277,13 @@ function WhitespaceInterpreter() {
     }
   };
 
-  const showHint = () => {
-    setHint(`
-SSSTSSTSSS
-T
-SSSSSTTSSTST
-T
-SSSSSTTSTTSS
-T
-SSSSSTTSTTSS
-T
-SSSSSTTSTTTT
-T
-SSSSSTSSSSS
-T
-SSSSSTSTSTTT
-T
-SSSSSTTSTTTT
-T
-SSSSSTTTSSTS
-T
-SSSSSTTSTTSS
-T
-SSSSSTTSSTSS
-T
-SSSSSSSSTSTS
-T
-SS
-`);
+    const showHint = () => {
+        setIsDisp(true);
   };
 
   return (
-    <div className="flex flex-col justify-center items-center space-y-6">
-      <p className="text-2xl font-bold">
+    <div className="flex flex-col justify-center items-center space-y-6 my-10 mx-10">
+      <p className="text-4xl font-bold">
         プログラミング言語{" "}
         <a
           href="https://ja.wikipedia.org/wiki/Whitespace"
@@ -321,12 +295,56 @@ SS
         で「Hello,World」を書こう!
       </p>
       <div className="flex">
-        <textarea
-          value={code}
-          onChange={handleCodeChange}
-          className="border-2 border-black w-96 h-96"
-        />
-        <div className="border-2 w-96 h-96">{result}</div>
+        <div className="flex-cols">
+          <p>入力</p>
+          <textarea
+            value={code}
+            onChange={handleCodeChange}
+            className="border-2 border-black w-96 h-96"
+          />
+        </div>
+        <div className="flex-cols">
+          <p>出力</p>
+          <div className="border-2 w-96 h-96">{result}</div>
+        </div>
+        <div className="flex-cols">
+          <div className="flex-cols text-xs ml-2">
+            {isDisp ? (
+              <div>
+                <p>SSSTSSTSSS</p>
+                <p>T</p>
+                <p>SSSSSTTSSTST</p>
+                <p>T</p>
+                <p>SSSSSTTSTTSS</p>
+                <p>T</p>
+                <p>SSSSSTTSTTSS</p>
+                <p>T</p>
+                <p>SSSSSTTSTTTT</p>
+                <p>T</p>
+                <p>SSSSSTSSSSS</p>
+                <p>T</p>
+                <p>SSSSSTSTSTTT</p>
+                <p>T</p>
+                <p>SSSSSTTSTTTT</p>
+                <p>T</p>
+                <p>SSSSSTTTSSTS</p>
+                <p>T</p>
+                <p>SSSSSTTSTTSS</p>
+                <p>T</p>
+                <p>SSSSSTTSSTSS</p>
+                <p>T</p>
+                <p>SSSSSSSSTSTS</p>
+                <p>T</p>
+                <p>SS</p>
+                <p>\n</p>
+                <p>\n</p>
+                <p>\n</p>
+              </div>
+            ) : (
+              <p></p>
+            )}
+          </div>
+        </div>
       </div>
       <button
         onClick={() => executeCode()}
@@ -337,7 +355,6 @@ SS
       <button onClick={showHint} className="border-2 border-black">
         ヒント
       </button>
-      <p>{hint}</p>
       <p className="text-9xl">{message}</p>
     </div>
   );
