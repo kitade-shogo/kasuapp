@@ -2,8 +2,9 @@ import React, { useState } from "react";
 
 function WhitespaceInterpreter() {
   const [code, setCode] = useState("");
-    const [result, setResult] = useState("");
-    const [hint, setHint] = useState("");
+  const [result, setResult] = useState("");
+  const [hint, setHint] = useState("");
+  const [message, setMessage] = useState("");
 
   // to help with debugging
   function unbleach(n) {
@@ -264,15 +265,20 @@ function WhitespaceInterpreter() {
   };
 
   const executeCode = () => {
-      try {
-        setResult(whitespace(code, ""));
-      } catch (error) {
-        setResult("ミスで〜〜〜す!wwww");
-      }
+    try {
+      setResult(whitespace(code, ""));
+    } catch (error) {
+      setResult(error);
+    }
+    if (result === "Hello World") {
+      setMessage("やるやん");
+    } else {
+      setMessage("ミスで〜す!www");
+    }
   };
-    
-    const showHint = () => {
-      setHint(`
+
+  const showHint = () => {
+    setHint(`
 SSSTSSTSSS
 T
 SSSSSTTSSTST
@@ -299,7 +305,7 @@ SSSSSSSSTSTS
 T
 SS
 `);
-    };
+  };
 
   return (
     <div className="flex flex-col justify-center items-center space-y-6">
@@ -314,11 +320,14 @@ SS
         </a>
         で「Hello,World」を書こう!
       </p>
-      <textarea
-        value={code}
-        onChange={handleCodeChange}
-        className="border-2 border-black w-96 h-96"
-      />
+      <div className="flex">
+        <textarea
+          value={code}
+          onChange={handleCodeChange}
+          className="border-2 border-black w-96 h-96"
+        />
+        <div className="border-2 w-96 h-96">{result}</div>
+      </div>
       <button
         onClick={() => executeCode()}
         className="border-2 border-black px-2"
@@ -329,7 +338,7 @@ SS
         ヒント
       </button>
       <p>{hint}</p>
-      <p className="text-9xl">{result}</p>
+      <p className="text-9xl">{message}</p>
     </div>
   );
 }
